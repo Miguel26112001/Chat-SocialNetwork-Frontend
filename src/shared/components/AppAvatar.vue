@@ -49,7 +49,7 @@ export default defineComponent({
 
 <template>
   <span
-    class="app-avatar"
+    class="app-avatar inline-flex align-items-center justify-content-center border-circle font-semibold flex-shrink-0"
     :class="sizeClass"
     :style="{ background: colors.bg, color: colors.fg }"
     aria-hidden="true"
@@ -59,15 +59,6 @@ export default defineComponent({
 </template>
 
 <style scoped>
-.app-avatar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 9999px;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-
 .app-avatar-small {
   width: 2rem;
   height: 2rem;

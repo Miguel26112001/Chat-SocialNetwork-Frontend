@@ -26,12 +26,12 @@ export default defineComponent({
 </script>
 
 <template>
-  <aside class="sidebar" :class="{ 'sidebar-collapsed': isCollapsed }" aria-label="Navegación principal">
-    <div class="sidebar-logo">
-      <span class="logo-mark"><i class="pi pi-comments"></i></span>
-      <span v-if="!isCollapsed" class="logo-text">Chat Social</span>
+  <aside class="sidebar flex flex-column gap-2" :class="{ 'sidebar-collapsed': isCollapsed }" aria-label="Navegación principal">
+    <div class="sidebar-logo flex align-items-center">
+      <span class="logo-mark border-circle inline-flex align-items-center justify-content-center"><i class="pi pi-comments"></i></span>
+      <span v-if="!isCollapsed" class="logo-text font-bold white-space-nowrap">Chat Social</span>
     </div>
-    <nav class="sidebar-nav">
+    <nav class="sidebar-nav flex flex-column flex-grow-1">
       <router-link
         v-for="item in menuItems"
         :key="item.label"
@@ -44,9 +44,9 @@ export default defineComponent({
           @click="navigate"
           :title="item.label"
           :aria-current="isActive ? 'page' : undefined"
-          :class="['sidebar-link', { 'sidebar-link-active': isActive }]"
+          :class="['sidebar-link flex align-items-center no-underline', { 'sidebar-link-active': isActive }]"
         >
-          <span class="sidebar-link-icon">
+          <span class="sidebar-link-icon relative inline-flex">
             <i :class="item.icon"></i>
             <Badge v-if="item.badge && item.badge > 0" :value="item.badge" severity="info" />
           </span>
@@ -59,7 +59,7 @@ export default defineComponent({
       text
       rounded
       aria-label="Colapsar menú"
-      class="sidebar-toggle"
+      class="align-self-start"
       @click="$emit('toggle')"
     />
   </aside>
@@ -69,12 +69,10 @@ export default defineComponent({
 .sidebar {
   width: 15rem;
   min-width: 15rem;
-  min-height: 100vh;
+  height: 100vh;
+  overflow-y: auto;
   position: sticky;
   top: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
   padding: 1.25rem 0.75rem;
   background: var(--cs-surface);
   border-right: 1px solid var(--cs-border);
@@ -86,8 +84,6 @@ export default defineComponent({
 }
 
 .sidebar-logo {
-  display: flex;
-  align-items: center;
   gap: 0.65rem;
   padding: 0.25rem 0.6rem 1rem;
 }
@@ -96,9 +92,6 @@ export default defineComponent({
   width: 2.25rem;
   height: 2.25rem;
   border-radius: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: var(--cs-primary);
   color: #fff;
   font-size: 1.1rem;
@@ -106,28 +99,20 @@ export default defineComponent({
 }
 
 .logo-text {
-  font-weight: 700;
   font-size: 1.05rem;
-  white-space: nowrap;
 }
 
 .sidebar-nav {
-  display: flex;
-  flex-direction: column;
   gap: 0.15rem;
-  flex-grow: 1;
 }
 
 .sidebar-link {
-  display: flex;
-  align-items: center;
   gap: 0.8rem;
   padding: 0.65rem 0.75rem;
   border-radius: 0.75rem;
   color: var(--cs-text);
   font-weight: 500;
   font-size: 0.95rem;
-  text-decoration: none;
 }
 
 .sidebar-link:hover {
@@ -150,9 +135,7 @@ export default defineComponent({
 }
 
 .sidebar-link-icon {
-  position: relative;
   font-size: 1.15rem;
-  display: inline-flex;
 }
 
 .sidebar-link-icon :deep(.p-badge) {
@@ -163,9 +146,5 @@ export default defineComponent({
   min-width: 1.1rem;
   height: 1.1rem;
   line-height: 1.1rem;
-}
-
-.sidebar-toggle {
-  align-self: flex-start;
 }
 </style>

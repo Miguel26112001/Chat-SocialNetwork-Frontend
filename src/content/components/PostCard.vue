@@ -71,7 +71,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <article class="cs-card post-card">
+  <article class="cs-card overflow-hidden">
     <div class="flex gap-3 p-4 pb-0">
       <AppAvatar :name="post.author.displayName" size="normal" />
       <div class="flex-grow-1 min-w-0">
@@ -120,7 +120,7 @@ export default defineComponent({
         <div v-for="comment in comments" :key="comment.id" class="flex gap-2">
           <AppAvatar :name="comment.author.displayName" size="small" />
           <div class="comment-bubble">
-            <p class="comment-author">
+            <p class="comment-author m-0 font-semibold">
               {{ comment.author.displayName }}
               <span class="cs-muted font-normal"> · {{ formatTime(comment.createdAt) }}</span>
             </p>
@@ -145,10 +145,6 @@ export default defineComponent({
 </template>
 
 <style scoped>
-.post-card {
-  overflow: hidden;
-}
-
 .post-content {
   margin: 0.35rem 0 0.75rem;
   line-height: 1.55;
@@ -187,9 +183,7 @@ export default defineComponent({
 }
 
 .comment-author {
-  margin: 0;
   font-size: 0.82rem;
-  font-weight: 600;
 }
 
 .comment-text {

@@ -56,7 +56,7 @@ export default defineComponent({
   <ConfirmDialog />
   <a href="#main-content" class="skip-link">Saltar al contenido</a>
 
-  <div class="layout-wrapper">
+  <div class="flex min-h-screen align-items-start">
     <TheSideBar
       v-if="showSidebar"
       :is-collapsed="isCollapsed"
@@ -65,11 +65,11 @@ export default defineComponent({
       class="layout-sidebar"
     />
 
-    <div class="layout-main">
+    <div class="flex-grow-1 flex flex-column min-w-0 min-h-screen">
       <TheHeader :is-dark="isDark" :show-actions="showSidebar" @toggle-dark="toggleDarkMode" />
 
-      <div class="layout-body">
-        <main id="main-content" class="layout-center">
+      <div class="layout-body flex-grow-1 flex w-full">
+        <main id="main-content" class="layout-center flex-grow-1 min-w-0 w-full">
           <router-view v-slot="{ Component }">
             <transition name="page" mode="out-in">
               <component :is="Component" />
@@ -77,7 +77,7 @@ export default defineComponent({
           </router-view>
         </main>
 
-        <aside v-if="showSidebar" class="layout-right" aria-label="Panel contextual">
+        <aside v-if="showSidebar" class="layout-right flex flex-column gap-3" aria-label="Panel contextual">
           <SuggestionsCard />
           <p class="cs-muted layout-footnote">Chat Social · Red social minimalista</p>
         </aside>
@@ -89,47 +89,25 @@ export default defineComponent({
 </template>
 
 <style>
-.layout-wrapper {
-  display: flex;
-  min-height: 100vh;
-}
-
 .layout-sidebar {
   z-index: 1100;
 }
 
-.layout-main {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  min-height: 100vh;
-}
-
 .layout-body {
-  flex-grow: 1;
-  display: flex;
   justify-content: center;
   gap: 1.5rem;
   padding: 1.25rem;
-  width: 100%;
   max-width: 72rem;
   margin: 0 auto;
 }
 
 .layout-center {
-  flex-grow: 1;
-  min-width: 0;
   max-width: 38rem;
-  width: 100%;
 }
 
 .layout-right {
   width: 20rem;
   min-width: 20rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
 }
 
 .layout-footnote {

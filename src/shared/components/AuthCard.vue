@@ -21,11 +21,11 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="auth-page">
-    <Card class="auth-card">
+  <div class="auth-page flex align-items-center justify-content-center">
+    <Card class="auth-card w-full">
       <template #content>
         <div class="flex flex-column align-items-center text-center mb-4">
-          <span class="auth-icon"><i :class="icon"></i></span>
+          <span class="auth-icon inline-flex align-items-center justify-content-center"><i :class="icon"></i></span>
           <h1 class="text-2xl font-bold m-0 mt-3">{{ title }}</h1>
           <p v-if="subtitle" class="cs-muted m-0 mt-2">{{ subtitle }}</p>
         </div>
@@ -41,15 +41,11 @@ export default defineComponent({
 
 <style scoped>
 .auth-page {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 2.5rem 1rem;
   min-height: 70vh;
 }
 
 .auth-card {
-  width: 100%;
   max-width: 26rem;
   box-shadow: var(--cs-shadow-md);
 }
@@ -58,9 +54,6 @@ export default defineComponent({
   width: 3rem;
   height: 3rem;
   border-radius: 0.9rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: var(--cs-primary);
   color: #fff;
   font-size: 1.3rem;

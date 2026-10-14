@@ -43,12 +43,12 @@ export default defineComponent({
 </script>
 
 <template>
-  <header class="app-header" :class="{ 'app-header-public': !showActions }">
+  <header class="app-header flex align-items-center" :class="{ 'app-header-public': !showActions }">
     <span class="header-brand">
-      <span class="logo-mark"><i class="pi pi-comments"></i></span>
-      <span class="logo-text">Chat Social</span>
+      <span class="logo-mark border-circle inline-flex align-items-center justify-content-center"><i class="pi pi-comments"></i></span>
+      <span class="font-bold">Chat Social</span>
     </span>
-    <div v-if="showActions" class="header-actions">
+    <div v-if="showActions" class="header-actions flex align-items-center ml-auto gap-1">
       <Button
         :icon="isDark ? 'pi pi-sun' : 'pi pi-moon'"
         text
@@ -56,7 +56,6 @@ export default defineComponent({
         aria-label="Cambiar tema"
         @click="$emit('toggle-dark')"
       />
-      <span class="header-divider" aria-hidden="true"></span>
       <Button
         v-if="isAuthenticated()"
         icon="pi pi-sign-out"
@@ -70,8 +69,6 @@ export default defineComponent({
 
 <style scoped>
 .app-header {
-  display: flex;
-  align-items: center;
   padding: 0.6rem 1.25rem;
   background: var(--cs-surface);
   border-bottom: 1px solid var(--cs-border);
@@ -81,22 +78,6 @@ export default defineComponent({
 }
 
 /* Las acciones siempre van a la derecha, haya marca visible o no. */
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.15rem;
-  margin-left: auto;
-  border: 1px solid var(--cs-border);
-  border-radius: 9999px;
-  padding: 0.15rem 0.4rem 0.15rem 0.15rem;
-  background: var(--cs-bg);
-}
-
-.header-divider {
-  width: 1px;
-  height: 1.4rem;
-  background: var(--cs-border);
-}
 
 /* En rutas públicas (login/registro): solo la marca, centrada. */
 .app-header-public {
@@ -117,15 +98,8 @@ export default defineComponent({
   width: 2rem;
   height: 2rem;
   border-radius: 0.65rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: var(--cs-primary);
   color: #fff;
-}
-
-.logo-text {
-  font-weight: 700;
 }
 
 /* En móvil no hay sidebar: la marca vive en el header. */

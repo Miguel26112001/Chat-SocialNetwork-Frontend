@@ -32,14 +32,14 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="cs-card suggestions">
-    <h3 class="suggestions-title">Sugerencias para ti</h3>
-    <div v-for="profile in suggestions" :key="profile.username" class="suggestion-row">
-      <button class="suggestion-user" @click="goToProfile(profile.username)">
+  <div class="cs-card suggestions p-4">
+    <h3 class="suggestions-title m-0 font-bold">Sugerencias para ti</h3>
+    <div v-for="profile in suggestions" :key="profile.username" class="suggestion-row flex align-items-center justify-content-between gap-2 py-2">
+      <button class="suggestion-user flex align-items-center cursor-pointer min-w-0 text-left" @click="goToProfile(profile.username)">
         <AppAvatar :name="profile.displayName" size="small" />
-        <span class="min-w-0">
-          <span class="suggestion-name">{{ profile.displayName }}</span>
-          <span class="cs-muted suggestion-handle">@{{ profile.username }}</span>
+        <span class="min-w-0 flex flex-column">
+          <span class="suggestion-name font-semibold white-space-nowrap overflow-hidden text-overflow-ellipsis">{{ profile.displayName }}</span>
+          <span class="cs-muted suggestion-handle white-space-nowrap overflow-hidden text-overflow-ellipsis">@{{ profile.username }}</span>
         </span>
       </button>
       <Button
@@ -53,21 +53,12 @@ export default defineComponent({
 </template>
 
 <style scoped>
-.suggestions {
-  padding: 1.25rem;
-}
-
 .suggestions-title {
-  margin: 0 0 1rem;
+  margin-bottom: 1rem;
   font-size: 0.95rem;
-  font-weight: 700;
 }
 
 .suggestion-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
   padding: 0.5rem 0;
 }
 
@@ -76,37 +67,19 @@ export default defineComponent({
 }
 
 .suggestion-user {
-  display: flex;
-  align-items: center;
   gap: 0.65rem;
   background: none;
   border: none;
   padding: 0;
-  cursor: pointer;
-  min-width: 0;
-  text-align: left;
   color: inherit;
   font: inherit;
 }
 
-.suggestion-user > span {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
 .suggestion-name {
-  font-weight: 600;
   font-size: 0.88rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .suggestion-handle {
   font-size: 0.8rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 </style>

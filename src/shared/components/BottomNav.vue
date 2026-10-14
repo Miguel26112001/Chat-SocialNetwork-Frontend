@@ -35,7 +35,7 @@ export default defineComponent({
     <button
       v-for="item in items"
       :key="item.routeName"
-      class="bottom-nav-item"
+      class="bottom-nav-item flex flex-column align-items-center cursor-pointer"
       :class="{ 'bottom-nav-active': isActive(item.routeName) }"
       :aria-current="isActive(item.routeName) ? 'page' : undefined"
       @click="go(item.routeName)"
@@ -64,14 +64,10 @@ export default defineComponent({
 
   .bottom-nav-item {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     gap: 0.15rem;
     background: none;
     border: none;
     padding: 0.4rem 0;
-    cursor: pointer;
     color: var(--cs-text-muted);
     font-size: 0.7rem;
     font-weight: 500;

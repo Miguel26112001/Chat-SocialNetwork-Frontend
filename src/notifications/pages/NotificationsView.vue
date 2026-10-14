@@ -72,16 +72,16 @@ export default defineComponent({
       <div
         v-for="item in notifications"
         :key="item.id"
-        class="notification-row"
+        class="notification-row flex align-items-center gap-3 py-3"
         :class="{ 'notification-unread': !item.read }"
       >
-        <span class="notification-icon"><i :class="iconFor(item.type)"></i></span>
+        <span class="notification-icon border-circle inline-flex align-items-center justify-content-center"><i :class="iconFor(item.type)"></i></span>
         <AppAvatar :name="item.actorName" size="small" />
-        <p class="notification-text">
+        <p class="notification-text m-0 flex-grow-1">
           <strong>{{ item.actorName }}</strong> {{ item.text }}
           <span class="cs-muted"> · {{ formatTime(item.createdAt) }}</span>
         </p>
-        <span v-if="!item.read" class="unread-dot" aria-label="Sin leer"></span>
+        <span v-if="!item.read" class="unread-dot border-circle flex-shrink-0" aria-label="Sin leer"></span>
       </div>
     </div>
   </div>
@@ -93,9 +93,6 @@ export default defineComponent({
 }
 
 .notification-row {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
   padding: 0.9rem 0;
 }
 
@@ -110,14 +107,9 @@ export default defineComponent({
 .notification-icon {
   width: 2rem;
   height: 2rem;
-  border-radius: 9999px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: var(--p-surface-100);
   color: var(--cs-primary);
   font-size: 0.9rem;
-  flex-shrink: 0;
 }
 
 .my-app-dark .notification-icon {
@@ -125,16 +117,12 @@ export default defineComponent({
 }
 
 .notification-text {
-  margin: 0;
   font-size: 0.9rem;
-  flex-grow: 1;
 }
 
 .unread-dot {
   width: 0.6rem;
   height: 0.6rem;
-  border-radius: 9999px;
   background: var(--cs-primary);
-  flex-shrink: 0;
 }
 </style>

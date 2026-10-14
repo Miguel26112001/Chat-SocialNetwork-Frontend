@@ -99,31 +99,31 @@ export default defineComponent({
       text="Cuando inicies un chat con alguien, aparecerá aquí."
     />
 
-    <div v-else class="cs-card messages-layout">
+    <div v-else class="cs-card messages-layout flex">
       <!-- Lista de conversaciones -->
-      <div class="chat-list" :class="{ 'chat-list-hidden': !showList }">
+      <div class="chat-list overflow-y-auto" :class="{ 'chat-list-hidden': !showList }">
         <button
           v-for="chat in conversations"
           :key="chat.id"
-          class="chat-item"
+          class="chat-item flex align-items-center w-full cursor-pointer text-left"
           :class="{ 'chat-item-active': chat.id === activeId }"
           @click="selectChat(chat.id)"
         >
           <AppAvatar :name="chat.displayName" size="normal" />
           <span class="min-w-0 flex-grow-1 text-left">
-            <span class="chat-item-top">
+            <span class="chat-item-top flex justify-content-between align-items-baseline gap-2">
               <span class="font-semibold">{{ chat.displayName }}</span>
               <span class="cs-muted text-sm">{{ formatTime(chat.lastMessageAt) }}</span>
             </span>
-            <span class="cs-muted chat-preview">{{ chat.lastMessage }}</span>
+            <span class="cs-muted chat-preview block white-space-nowrap overflow-hidden text-overflow-ellipsis">{{ chat.lastMessage }}</span>
           </span>
           <Badge v-if="chat.unreadCount > 0" :value="chat.unreadCount" severity="info" />
         </button>
       </div>
 
       <!-- Hilo activo -->
-      <div v-if="activeChat" class="chat-thread" :class="{ 'chat-thread-hidden': showList }">
-        <div class="thread-header">
+      <div v-if="activeChat" class="chat-thread flex-grow-1 flex flex-column min-w-0" :class="{ 'chat-thread-hidden': showList }">
+        <div class="thread-header flex align-items-center">
           <Button
             icon="pi pi-arrow-left"
             text
@@ -137,21 +137,21 @@ export default defineComponent({
           <span class="cs-muted text-sm">@{{ activeChat.username }}</span>
         </div>
 
-        <div ref="thread" class="thread-messages">
+        <div ref="thread" class="thread-messages flex-grow-1 overflow-y-auto flex flex-column gap-2">
           <div
             v-for="message in activeChat.messages"
             :key="message.id"
-            class="message-row"
-            :class="{ 'message-mine': message.mine }"
+            class="message-row flex"
+            :class="{ 'message-mine justify-content-end': message.mine }"
           >
             <div class="message-bubble">
-              <p class="message-text">{{ message.content }}</p>
-              <span class="message-hour">{{ formatHour(message.createdAt) }}</span>
+              <p class="message-text m-0">{{ message.content }}</p>
+              <span class="message-hour block text-right">{{ formatHour(message.createdAt) }}</span>
             </div>
           </div>
         </div>
 
-        <form @submit.prevent="sendMessage" class="thread-input">
+        <form @submit.prevent="sendMessage" class="thread-input flex gap-2">
           <InputText
             v-model="draft"
             placeholder="Escribe un mensaje..."
@@ -167,7 +167,6 @@ export default defineComponent({
 
 <style scoped>
 .messages-layout {
-  display: flex;
   min-height: 32rem;
   max-height: calc(100vh - 14rem);
   overflow: hidden;
@@ -177,22 +176,16 @@ export default defineComponent({
   width: 20rem;
   min-width: 20rem;
   border-right: 1px solid var(--cs-border);
-  overflow-y: auto;
 }
 
 .chat-item {
-  display: flex;
-  align-items: center;
   gap: 0.75rem;
-  width: 100%;
   padding: 0.9rem 1rem;
   background: none;
   border: none;
   border-bottom: 1px solid var(--cs-border);
-  cursor: pointer;
   color: inherit;
   font: inherit;
-  text-align: left;
 }
 
 .chat-item:hover {
@@ -211,52 +204,22 @@ export default defineComponent({
   background: var(--p-surface-800);
 }
 
-.chat-item-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 0.5rem;
-}
-
 .chat-preview {
-  display: block;
   font-size: 0.85rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.chat-thread {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.thread-header {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.9rem 1rem;
-  border-bottom: 1px solid var(--cs-border);
 }
 
 .thread-back {
   display: none;
 }
 
-.thread-messages {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+.thread-header {
+  gap: 0.6rem;
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid var(--cs-border);
 }
 
-.message-row {
-  display: flex;
-  justify-content: flex-start;
+.thread-messages {
+  padding: 1rem;
 }
 
 .message-mine {
@@ -285,23 +248,18 @@ export default defineComponent({
 }
 
 .message-text {
-  margin: 0;
   font-size: 0.92rem;
   line-height: 1.5;
   overflow-wrap: anywhere;
 }
 
 .message-hour {
-  display: block;
-  text-align: right;
   font-size: 0.72rem;
   color: var(--cs-text-muted);
   margin-top: 0.2rem;
 }
 
 .thread-input {
-  display: flex;
-  gap: 0.5rem;
   padding: 0.9rem 1rem;
   border-top: 1px solid var(--cs-border);
 }

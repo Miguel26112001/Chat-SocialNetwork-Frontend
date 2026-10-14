@@ -104,7 +104,7 @@ export default defineComponent({
     />
 
     <template v-else-if="profile">
-      <div class="cs-card profile-header">
+      <div class="cs-card p-4">
         <div class="flex flex-column sm:flex-row gap-4 align-items-start">
           <AppAvatar :name="profile.displayName" size="xlarge" />
           <div class="flex-grow-1 min-w-0">
@@ -113,7 +113,7 @@ export default defineComponent({
               <Tag v-if="profile.isPrivate" icon="pi pi-lock" value="Privada" severity="secondary" />
             </div>
             <p class="cs-muted m-0 mt-1">@{{ profile.username }}</p>
-            <p v-if="profile.bio" class="profile-bio">{{ profile.bio }}</p>
+            <p v-if="profile.bio" class="profile-bio mt-2">{{ profile.bio }}</p>
             <div class="flex gap-4 mt-3">
               <span><strong>{{ profile.followersCount }}</strong> <span class="cs-muted">seguidores</span></span>
               <span><strong>{{ profile.followingCount }}</strong> <span class="cs-muted">seguidos</span></span>
@@ -161,12 +161,7 @@ export default defineComponent({
 </template>
 
 <style scoped>
-.profile-header {
-  padding: 1.5rem;
-}
-
 .profile-bio {
-  margin: 0.5rem 0 0;
   line-height: 1.55;
 }
 </style>

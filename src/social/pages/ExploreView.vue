@@ -58,20 +58,20 @@ export default defineComponent({
       <InputText v-model="query" placeholder="Buscar personas..." class="w-full" aria-label="Buscar personas" />
     </IconField>
 
-    <div class="cs-card explore-section">
-      <h2 class="section-title">Personas</h2>
+    <div class="cs-card explore-section p-4">
+      <h2 class="m-0 mb-2 font-bold text-base">Personas</h2>
       <EmptyState
         v-if="filteredUsers.length === 0"
         icon="pi pi-user"
         title="Sin resultados"
         text="No encontramos a nadie con ese nombre."
       />
-      <div v-for="user in filteredUsers" :key="user.username" class="explore-row">
-        <button class="explore-user" @click="goToProfile(user.username)">
+      <div v-for="user in filteredUsers" :key="user.username" class="explore-row flex align-items-center justify-content-between gap-3 py-3">
+        <button class="explore-user flex align-items-center cursor-pointer min-w-0 text-left" @click="goToProfile(user.username)">
           <AppAvatar :name="user.displayName" size="normal" />
-          <span class="min-w-0">
-            <span class="explore-name">{{ user.displayName }}</span>
-            <span class="cs-muted explore-bio">@{{ user.username }} · {{ user.bio }}</span>
+          <span class="min-w-0 flex flex-column">
+            <span class="font-semibold">{{ user.displayName }}</span>
+            <span class="cs-muted explore-bio white-space-nowrap overflow-hidden text-overflow-ellipsis">@{{ user.username }} · {{ user.bio }}</span>
           </span>
         </button>
         <Button
@@ -83,11 +83,11 @@ export default defineComponent({
       </div>
     </div>
 
-    <div class="cs-card explore-section">
-      <h2 class="section-title">Tendencias</h2>
-      <div v-for="trend in trends" :key="trend.tag" class="explore-row">
+    <div class="cs-card explore-section p-4">
+      <h2 class="m-0 mb-2 font-bold text-base">Tendencias</h2>
+      <div v-for="trend in trends" :key="trend.tag" class="explore-row flex align-items-center justify-content-between gap-3 py-3">
         <span>
-          <span class="explore-name">{{ trend.tag }}</span>
+          <span class="font-semibold">{{ trend.tag }}</span>
           <span class="cs-muted explore-bio">{{ trend.posts.toLocaleString('es') }} publicaciones</span>
         </span>
         <i class="pi pi-chart-line cs-muted"></i>
@@ -97,21 +97,7 @@ export default defineComponent({
 </template>
 
 <style scoped>
-.explore-section {
-  padding: 1.25rem;
-}
-
-.section-title {
-  margin: 0 0 0.5rem;
-  font-size: 1rem;
-  font-weight: 700;
-}
-
 .explore-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
   padding: 0.75rem 0;
 }
 
@@ -120,34 +106,16 @@ export default defineComponent({
 }
 
 .explore-user {
-  display: flex;
-  align-items: center;
   gap: 0.75rem;
   background: none;
   border: none;
   padding: 0;
-  cursor: pointer;
-  min-width: 0;
-  text-align: left;
   color: inherit;
   font: inherit;
 }
 
-.explore-user > span {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.explore-name {
-  font-weight: 600;
-}
-
 .explore-bio {
   font-size: 0.82rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   max-width: 18rem;
 }
 </style>
