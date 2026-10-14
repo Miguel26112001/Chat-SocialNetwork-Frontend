@@ -58,7 +58,7 @@ export default defineComponent({
       <InputText v-model="query" placeholder="Buscar personas..." class="w-full" aria-label="Buscar personas" />
     </IconField>
 
-    <div class="cs-card explore-section p-4">
+    <div class="cs-card explore-section">
       <h2 class="m-0 mb-2 font-bold text-base">Personas</h2>
       <EmptyState
         v-if="filteredUsers.length === 0"
@@ -83,7 +83,7 @@ export default defineComponent({
       </div>
     </div>
 
-    <div class="cs-card explore-section p-4">
+    <div class="cs-card explore-section">
       <h2 class="m-0 mb-2 font-bold text-base">Tendencias</h2>
       <div v-for="trend in trends" :key="trend.tag" class="explore-row flex align-items-center justify-content-between gap-3 py-3">
         <span>
@@ -97,6 +97,10 @@ export default defineComponent({
 </template>
 
 <style scoped>
+.explore-section {
+  padding: 1.25rem;
+}
+
 .explore-row {
   padding: 0.75rem 0;
 }

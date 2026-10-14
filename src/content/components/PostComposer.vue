@@ -2,7 +2,7 @@
 import { defineComponent, type PropType } from 'vue';
 import AppAvatar from '@/shared/components/AppAvatar.vue';
 import { timelineService } from '@/content/services/timeline.service';
-import type { Post, PostAuthor } from '@/content/model/post.entity';
+import type { PostAuthor } from '@/content/model/post.entity';
 
 export default defineComponent({
   name: 'PostComposer',

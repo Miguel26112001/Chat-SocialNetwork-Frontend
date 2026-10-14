@@ -64,7 +64,7 @@ export default defineComponent({
       <span class="logo-mark border-circle inline-flex align-items-center justify-content-center"><i class="pi pi-comments"></i></span>
       <span class="font-bold">Chat Social</span>
     </span>
-    <div v-if="showActions" class="header-actions flex align-items-center ml-auto gap-1">
+    <div v-if="showActions" class="flex align-items-center ml-auto gap-1">
       <Button
         :icon="isDark ? 'pi pi-sun' : 'pi pi-moon'"
         text

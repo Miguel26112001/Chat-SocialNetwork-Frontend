@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, type PropType } from 'vue';
+import { defineComponent } from 'vue';
 import AppAvatar from '@/shared/components/AppAvatar.vue';
 import EmptyState from '@/shared/components/EmptyState.vue';
 import LoadingList from '@/shared/components/LoadingList.vue';

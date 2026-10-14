@@ -113,7 +113,7 @@ export default defineComponent({
         >
           <AppAvatar :name="chat.displayName" size="normal" />
           <span class="min-w-0 flex-grow-1 text-left">
-            <span class="chat-item-top flex justify-content-between align-items-baseline gap-2">
+            <span class="flex justify-content-between align-items-baseline gap-2">
               <span class="font-semibold">{{ chat.displayName }}</span>
               <span class="cs-muted text-sm">{{ formatTime(chat.lastMessageAt) }}</span>
             </span>
@@ -222,10 +222,6 @@ export default defineComponent({
 
 .thread-messages {
   padding: 1rem;
-}
-
-.message-mine {
-  justify-content: flex-end;
 }
 
 .message-bubble {

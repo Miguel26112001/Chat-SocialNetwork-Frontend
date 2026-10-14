@@ -26,7 +26,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="cs-card empty-state flex flex-column align-items-center text-center py-8 px-4 gap-2">
+  <div class="cs-card flex flex-column align-items-center text-center py-8 px-4 gap-2">
     <span class="empty-icon border-circle inline-flex align-items-center justify-content-center"><i :class="icon"></i></span>
     <h3 class="empty-title m-0 font-semibold">{{ title }}</h3>
     <p v-if="text" class="cs-muted empty-text m-0">{{ text }}</p>

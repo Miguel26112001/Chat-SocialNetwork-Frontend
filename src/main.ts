@@ -14,7 +14,6 @@ import Tooltip from 'primevue/tooltip';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
 import {
-  Avatar,
   Badge,
   Button,
   Card,
@@ -26,7 +25,6 @@ import {
   InputText,
   Message,
   Password,
-  ProgressSpinner,
   Skeleton,
   Tag,
   Textarea,
@@ -66,7 +64,6 @@ app
   .use(ToastService)
   .use(ConfirmationService)
 
-  .component('Avatar', Avatar)
   .component('Badge', Badge)
   .component('Button', Button)
   .component('Card', Card)
@@ -78,7 +75,6 @@ app
   .component('InputText', InputText)
   .component('Message', Message)
   .component('Password', Password)
-  .component('ProgressSpinner', ProgressSpinner)
   .component('Skeleton', Skeleton)
   .component('Tag', Tag)
   .component('Textarea', Textarea)
