@@ -48,7 +48,7 @@ export default defineComponent({
       <span class="logo-mark"><i class="pi pi-comments"></i></span>
       <span class="logo-text">Chat Social</span>
     </span>
-    <div v-if="showActions" class="flex align-items-center gap-1">
+    <div v-if="showActions" class="header-actions">
       <Button
         :icon="isDark ? 'pi pi-sun' : 'pi pi-moon'"
         text
@@ -56,6 +56,7 @@ export default defineComponent({
         aria-label="Cambiar tema"
         @click="$emit('toggle-dark')"
       />
+      <span class="header-divider" aria-hidden="true"></span>
       <Button
         v-if="isAuthenticated()"
         icon="pi pi-sign-out"
@@ -71,13 +72,30 @@ export default defineComponent({
 .app-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 0.6rem 1.25rem;
   background: var(--cs-surface);
   border-bottom: 1px solid var(--cs-border);
   position: sticky;
   top: 0;
   z-index: 1000;
+}
+
+/* Las acciones siempre van a la derecha, haya marca visible o no. */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  margin-left: auto;
+  border: 1px solid var(--cs-border);
+  border-radius: 9999px;
+  padding: 0.15rem 0.4rem 0.15rem 0.15rem;
+  background: var(--cs-bg);
+}
+
+.header-divider {
+  width: 1px;
+  height: 1.4rem;
+  background: var(--cs-border);
 }
 
 /* En rutas públicas (login/registro): solo la marca, centrada. */
