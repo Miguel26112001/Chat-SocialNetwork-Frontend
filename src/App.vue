@@ -66,7 +66,7 @@ export default defineComponent({
     />
 
     <div class="layout-main">
-      <TheHeader :is-dark="isDark" @toggle-dark="toggleDarkMode" />
+      <TheHeader :is-dark="isDark" :show-actions="showSidebar" @toggle-dark="toggleDarkMode" />
 
       <div class="layout-body">
         <main id="main-content" class="layout-center">

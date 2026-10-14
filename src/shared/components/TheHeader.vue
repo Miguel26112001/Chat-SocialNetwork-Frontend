@@ -10,6 +10,10 @@ export default defineComponent({
     isDark: {
       type: Boolean,
       required: true
+    },
+    showActions: {
+      type: Boolean,
+      required: true
     }
   },
   emits: ['toggle-dark'],
@@ -39,12 +43,12 @@ export default defineComponent({
 </script>
 
 <template>
-  <header class="app-header">
-    <span class="header-logo">
+  <header class="app-header" :class="{ 'app-header-public': !showActions }">
+    <span class="header-brand">
       <span class="logo-mark"><i class="pi pi-comments"></i></span>
       <span class="logo-text">Chat Social</span>
     </span>
-    <div class="flex align-items-center gap-1">
+    <div v-if="showActions" class="flex align-items-center gap-1">
       <Button
         :icon="isDark ? 'pi pi-sun' : 'pi pi-moon'"
         text
@@ -76,10 +80,19 @@ export default defineComponent({
   z-index: 1000;
 }
 
-.header-logo {
+/* En rutas públicas (login/registro): solo la marca, centrada. */
+.app-header-public {
+  justify-content: center;
+}
+
+.header-brand {
   display: none;
   align-items: center;
   gap: 0.6rem;
+}
+
+.app-header-public .header-brand {
+  display: flex;
 }
 
 .logo-mark {
@@ -97,9 +110,9 @@ export default defineComponent({
   font-weight: 700;
 }
 
-/* En móvil no hay sidebar: el logo vive en el header. */
+/* En móvil no hay sidebar: la marca vive en el header. */
 @media (max-width: 767px) {
-  .header-logo {
+  .header-brand {
     display: flex;
   }
 }
