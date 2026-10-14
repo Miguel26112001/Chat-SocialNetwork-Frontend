@@ -1,7 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '@/iam/pages/HomeView.vue';
+import FeedView from '@/content/pages/FeedView.vue';
 import LoginView from '@/iam/pages/LoginView.vue';
 import RegisterView from '@/iam/pages/RegisterView.vue';
+import ExploreView from '@/social/pages/ExploreView.vue';
+import MessagesView from '@/chat/pages/MessagesView.vue';
+import NotificationsView from '@/notifications/pages/NotificationsView.vue';
+import ProfileView from '@/profiles/pages/ProfileView.vue';
 import { isAuthenticated } from '@/shared/services/token-storage';
 
 const routes = [
@@ -24,7 +28,33 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    component: HomeView
+    component: FeedView
+  },
+  {
+    path: '/explore',
+    name: 'explore',
+    component: ExploreView
+  },
+  {
+    path: '/messages',
+    name: 'messages',
+    component: MessagesView
+  },
+  {
+    path: '/notifications',
+    name: 'notifications',
+    component: NotificationsView
+  },
+  {
+    path: '/profile/me',
+    name: 'my-profile',
+    component: ProfileView
+  },
+  {
+    path: '/profile/:username',
+    name: 'profile',
+    component: ProfileView,
+    props: true
   }
 ];
 

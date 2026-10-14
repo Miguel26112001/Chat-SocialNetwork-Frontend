@@ -1,0 +1,25 @@
+/* Design tokens — Chat Social (Social SaaS minimalista).
+   Superficies y texto se adaptan al modo oscuro bajo .my-app-dark. */
+
+:root {
+  --cs-bg: #f8fafc;
+  --cs-surface: #ffffff;
+  --cs-text: #0f172a;
+  --cs-text-muted: #64748b;
+  --cs-primary: #4f46e5;
+  --cs-border: #e2e8f0;
+  --cs-radius: 14px;
+  --cs-radius-sm: 12px;
+  --cs-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --cs-shadow-md: 0 4px 12px rgba(15, 23, 42, 0.07);
+}
+
+.my-app-dark {
+  --cs-bg: #0b1220;
+  --cs-surface: #111c33;
+  --cs-text: #f1f5f9;
+  --cs-text-muted: #94a3b8;
+  --cs-border: #1e293b;
+  --cs-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --cs-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+}

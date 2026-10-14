@@ -2,11 +2,13 @@
 import { defineComponent } from 'vue';
 import TheSideBar, { type MenuItem } from '@/shared/components/TheSideBar.vue';
 import TheHeader from '@/shared/components/TheHeader.vue';
+import BottomNav from '@/shared/components/BottomNav.vue';
+import SuggestionsCard from '@/shared/components/SuggestionsCard.vue';
 import { isAuthenticated } from '@/shared/services/token-storage';
 
 export default defineComponent({
   name: 'App',
-  components: { TheSideBar, TheHeader },
+  components: { TheSideBar, TheHeader, BottomNav, SuggestionsCard },
   data() {
     return {
       isCollapsed: false,
@@ -21,7 +23,13 @@ export default defineComponent({
       return !this.isPublicRoute && isAuthenticated();
     },
     menuItems(): MenuItem[] {
-      return [{ label: 'Inicio', icon: 'pi pi-home', to: { name: 'home' } }];
+      return [
+        { label: 'Inicio', icon: 'pi pi-home', to: { name: 'home' } },
+        { label: 'Explorar', icon: 'pi pi-search', to: { name: 'explore' } },
+        { label: 'Mensajes', icon: 'pi pi-envelope', to: { name: 'messages' } },
+        { label: 'Notificaciones', icon: 'pi pi-bell', to: { name: 'notifications' }, badge: 3 },
+        { label: 'Mi perfil', icon: 'pi pi-user', to: { name: 'my-profile' } }
+      ];
     }
   },
   methods: {
@@ -46,8 +54,9 @@ export default defineComponent({
 <template>
   <Toast />
   <ConfirmDialog />
+  <a href="#main-content" class="skip-link">Saltar al contenido</a>
 
-  <div class="layout-wrapper flex min-h-screen">
+  <div class="layout-wrapper">
     <TheSideBar
       v-if="showSidebar"
       :is-collapsed="isCollapsed"
@@ -56,31 +65,114 @@ export default defineComponent({
       class="layout-sidebar"
     />
 
-    <div class="flex-grow-1 flex flex-column overflow-x-hidden">
-      <TheHeader
-        :is-dark="isDark"
-        :show-menu-button="showSidebar"
-        @menu-click="toggleSidebar"
-        @toggle-dark="toggleDarkMode"
-      />
+    <div class="layout-main">
+      <TheHeader :is-dark="isDark" @toggle-dark="toggleDarkMode" />
 
-      <div class="p-3 md:p-4 lg:p-5 flex-grow-1 overflow-y-auto">
-        <div
-          class="surface-card border-round-xl shadow-sm p-4 md:p-6 min-h-full border-1 border-surface-200"
-        >
+      <div class="layout-body">
+        <main id="main-content" class="layout-center">
           <router-view v-slot="{ Component }">
             <transition name="page" mode="out-in">
               <component :is="Component" />
             </transition>
           </router-view>
-        </div>
+        </main>
+
+        <aside v-if="showSidebar" class="layout-right" aria-label="Panel contextual">
+          <SuggestionsCard />
+          <p class="cs-muted layout-footnote">Chat Social · Red social minimalista</p>
+        </aside>
       </div>
+
+      <BottomNav v-if="showSidebar" />
     </div>
   </div>
 </template>
 
 <style>
+.layout-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
 .layout-sidebar {
   z-index: 1100;
+}
+
+.layout-main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 100vh;
+}
+
+.layout-body {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1.25rem;
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.layout-center {
+  flex-grow: 1;
+  min-width: 0;
+  max-width: 38rem;
+  width: 100%;
+}
+
+.layout-right {
+  width: 20rem;
+  min-width: 20rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.layout-footnote {
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--cs-primary);
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 0 0 8px 0;
+  z-index: 2000;
+}
+
+.skip-link:focus {
+  left: 0;
+  text-decoration: none;
+}
+
+/* Columna derecha solo en pantallas amplias. */
+@media (max-width: 1199px) {
+  .layout-right {
+    display: none;
+  }
+}
+
+/* Móvil: sin sidebar lateral, el feed ocupa todo el ancho. */
+@media (max-width: 767px) {
+  .layout-sidebar {
+    display: none;
+  }
+
+  .layout-body {
+    padding: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .layout-center {
+    max-width: 100%;
+  }
 }
 </style>

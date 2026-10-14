@@ -1,10 +1,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
+import AuthCard from '@/shared/components/AuthCard.vue';
 import { AuthService } from '@/iam/services/auth.service';
 import { getApiErrorMessage } from '@/shared/services/api-error';
 
 export default defineComponent({
   name: 'LoginView',
+  components: { AuthCard },
   data() {
     return {
       authService: new AuthService(),
@@ -52,48 +54,49 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="flex justify-content-center">
-    <Card class="w-full" style="max-width: 28rem">
-      <template #title>Iniciar sesión</template>
-      <template #content>
-        <form @submit.prevent="handleLogin" class="flex flex-column gap-3">
-          <div class="flex flex-column gap-2">
-            <label for="usernameOrEmail">Usuario o correo</label>
-            <InputText
-              id="usernameOrEmail"
-              v-model="form.usernameOrEmail"
-              placeholder="ana_dev o ana@example.com"
-              autocomplete="username"
-              :disabled="loading"
-            />
-          </div>
-          <div class="flex flex-column gap-2">
-            <label for="password">Contraseña</label>
-            <Password
-              id="password"
-              v-model="form.password"
-              placeholder="Tu contraseña"
-              autocomplete="current-password"
-              toggle-mask
-              :feedback="false"
-              :disabled="loading"
-              input-class="w-full"
-              class="w-full"
-            />
-          </div>
-          <Button
-            type="submit"
-            label="Entrar"
-            icon="pi pi-sign-in"
-            :loading="loading"
-            class="mt-2"
-          />
-        </form>
-        <p class="text-500 mt-4 mb-0">
-          ¿Sin cuenta?
-          <router-link :to="{ name: 'register' }">Regístrate aquí</router-link>
-        </p>
-      </template>
-    </Card>
-  </div>
+  <AuthCard
+    icon="pi pi-sign-in"
+    title="Bienvenido de nuevo"
+    subtitle="Inicia sesión para continuar a Chat Social"
+  >
+    <form @submit.prevent="handleLogin" class="flex flex-column gap-4 mt-2">
+      <FloatLabel>
+        <InputText
+          id="usernameOrEmail"
+          v-model="form.usernameOrEmail"
+          class="w-full"
+          autocomplete="username"
+          :disabled="loading"
+        />
+        <label for="usernameOrEmail">Usuario o correo</label>
+      </FloatLabel>
+      <FloatLabel>
+        <Password
+          inputId="password"
+          v-model="form.password"
+          class="w-full"
+          input-class="w-full"
+          autocomplete="current-password"
+          toggle-mask
+          :feedback="false"
+          :disabled="loading"
+        />
+        <label for="password">Contraseña</label>
+      </FloatLabel>
+      <Button
+        type="submit"
+        label="Entrar"
+        icon="pi pi-arrow-right"
+        icon-pos="right"
+        :loading="loading"
+        class="w-full mt-1"
+      />
+    </form>
+    <template #footer>
+      <p class="text-500 text-center m-0">
+        ¿Sin cuenta?
+        <router-link :to="{ name: 'register' }" class="font-medium">Regístrate aquí</router-link>
+      </p>
+    </template>
+  </AuthCard>
 </template>

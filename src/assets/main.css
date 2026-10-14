@@ -1,6 +1,5 @@
-/* Estilos base mínimos. PrimeFlex aporta las utilidades y
-   PrimeVue (preset Aura) los componentes y el modo oscuro
-   (selector .my-app-dark). */
+/* Estilos base. Los tokens viven en design-tokens.css;
+   PrimeVue (preset Aura índigo) aporta componentes y modo oscuro. */
 
 html,
 body {
@@ -10,17 +9,47 @@ body {
 }
 
 body {
-  font-family: var(--font-family, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--cs-bg);
+  color: var(--cs-text);
   -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--cs-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Foco visible consistente para navegación con teclado. */
+:focus-visible {
+  outline: 2px solid var(--cs-primary);
+  outline-offset: 2px;
+  border-radius: 6px;
 }
 
 /* Transición entre páginas (router-view de App.vue). */
 .page-enter-active,
 .page-leave-active {
-  transition: opacity 0.2s ease;
+  transition: opacity 0.15s ease;
 }
 
 .page-enter-from,
 .page-leave-to {
   opacity: 0;
+}
+
+/* Utilidades del sistema de diseño. */
+.cs-card {
+  background: var(--cs-surface);
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius);
+  box-shadow: var(--cs-shadow);
+}
+
+.cs-muted {
+  color: var(--cs-text-muted);
 }
