@@ -26,7 +26,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <aside class="sidebar flex flex-column gap-2" :class="{ 'sidebar-collapsed': isCollapsed }" aria-label="Navegación principal">
+  <aside class="sidebar hidden md:flex flex-column gap-2" :class="{ 'sidebar-collapsed': isCollapsed }" aria-label="Navegación principal">
     <div class="sidebar-logo flex align-items-center">
       <span class="logo-mark border-circle inline-flex align-items-center justify-content-center"><i class="pi pi-comments"></i></span>
       <span v-if="!isCollapsed" class="logo-text font-bold white-space-nowrap">Chat Social</span>

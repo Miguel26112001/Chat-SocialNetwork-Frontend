@@ -116,6 +116,6 @@ export default defineComponent({
 
 .explore-bio {
   font-size: 0.82rem;
-  max-width: 18rem;
+  max-width: 100%;
 }
 </style>

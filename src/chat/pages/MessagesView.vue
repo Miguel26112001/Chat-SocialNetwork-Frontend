@@ -39,7 +39,9 @@ export default defineComponent({
       this.loading = true;
       try {
         this.conversations = await chatService.getConversations();
-        if (!this.activeId && this.conversations.length > 0) {
+        // En móvil se arranca en la lista; en escritorio, con el primer chat abierto.
+        const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+        if (isDesktop && !this.activeId && this.conversations.length > 0) {
           this.activeId = this.conversations[0]!.id;
         }
       } finally {
@@ -101,7 +103,7 @@ export default defineComponent({
 
     <div v-else class="cs-card messages-layout flex">
       <!-- Lista de conversaciones -->
-      <div class="chat-list overflow-y-auto" :class="{ 'chat-list-hidden': !showList }">
+      <div class="chat-list overflow-y-auto md:block" :class="{ 'hidden': !showList }">
         <button
           v-for="chat in conversations"
           :key="chat.id"
@@ -122,7 +124,7 @@ export default defineComponent({
       </div>
 
       <!-- Hilo activo -->
-      <div v-if="activeChat" class="chat-thread flex-grow-1 flex flex-column min-w-0" :class="{ 'chat-thread-hidden': showList }">
+      <div v-if="activeChat" class="chat-thread flex-grow-1 flex-column min-w-0 md:flex" :class="showList ? 'hidden' : 'flex'">
         <div class="thread-header flex align-items-center">
           <Button
             icon="pi pi-arrow-left"
@@ -264,7 +266,7 @@ export default defineComponent({
   border-top: 1px solid var(--cs-border);
 }
 
-/* Móvil: lista o hilo, nunca ambos. */
+/* Móvil: lista o hilo, nunca ambos (clases hidden/md de PrimeFlex). */
 @media (max-width: 767px) {
   .messages-layout {
     max-height: calc(100vh - 16rem);
@@ -274,11 +276,6 @@ export default defineComponent({
     width: 100%;
     min-width: 0;
     border-right: none;
-  }
-
-  .chat-list-hidden,
-  .chat-thread-hidden {
-    display: none;
   }
 
   .chat-thread {

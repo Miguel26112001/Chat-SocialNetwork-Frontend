@@ -53,3 +53,8 @@ a:hover {
 .cs-muted {
   color: var(--cs-text-muted);
 }
+
+/* El Toast de PrimeVue mide 25rem por defecto y desbordaría en móvil. */
+.p-toast {
+  max-width: calc(100vw - 2rem);
+}

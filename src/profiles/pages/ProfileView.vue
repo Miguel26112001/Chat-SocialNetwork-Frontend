@@ -114,13 +114,13 @@ export default defineComponent({
             </div>
             <p class="cs-muted m-0 mt-1">@{{ profile.username }}</p>
             <p v-if="profile.bio" class="profile-bio mt-2">{{ profile.bio }}</p>
-            <div class="flex gap-4 mt-3">
+            <div class="flex gap-4 mt-3 flex-wrap">
               <span><strong>{{ profile.followersCount }}</strong> <span class="cs-muted">seguidores</span></span>
               <span><strong>{{ profile.followingCount }}</strong> <span class="cs-muted">seguidos</span></span>
             </div>
           </div>
         </div>
-        <div class="flex gap-2 mt-4">
+        <div class="flex gap-2 mt-4 flex-wrap">
           <Button
             v-if="isOwnProfile"
             label="Editar perfil"

@@ -14,9 +14,14 @@ export default defineComponent({
     showActions: {
       type: Boolean,
       required: true
+    },
+    menuOpen: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
-  emits: ['toggle-dark'],
+  emits: ['toggle-dark', 'menu-click'],
   data() {
     return {
       authService: new AuthService(),
@@ -44,6 +49,17 @@ export default defineComponent({
 
 <template>
   <header class="app-header flex align-items-center" :class="{ 'app-header-public': !showActions }">
+    <Button
+      v-if="showActions"
+      :icon="menuOpen ? 'pi pi-times' : 'pi pi-bars'"
+      text
+      rounded
+      class="menu-button"
+      :aria-expanded="menuOpen"
+      aria-controls="mobile-menu"
+      aria-label="Abrir menú"
+      @click="$emit('menu-click')"
+    />
     <span class="header-brand">
       <span class="logo-mark border-circle inline-flex align-items-center justify-content-center"><i class="pi pi-comments"></i></span>
       <span class="font-bold">Chat Social</span>
@@ -79,6 +95,11 @@ export default defineComponent({
 
 /* Las acciones siempre van a la derecha, haya marca visible o no. */
 
+/* Botón hamburguesa: solo móvil (en escritorio está el sidebar). */
+.menu-button {
+  display: none;
+}
+
 /* En rutas públicas (login/registro): solo la marca, centrada. */
 .app-header-public {
   justify-content: center;
@@ -102,10 +123,14 @@ export default defineComponent({
   color: #fff;
 }
 
-/* En móvil no hay sidebar: la marca vive en el header. */
+/* En móvil no hay sidebar: marca + hamburguesa en el header. */
 @media (max-width: 767px) {
   .header-brand {
     display: flex;
+  }
+
+  .menu-button {
+    display: inline-flex;
   }
 }
 </style>

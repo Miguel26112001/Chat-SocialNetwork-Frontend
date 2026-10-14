@@ -2,17 +2,18 @@
 import { defineComponent } from 'vue';
 import TheSideBar, { type MenuItem } from '@/shared/components/TheSideBar.vue';
 import TheHeader from '@/shared/components/TheHeader.vue';
-import BottomNav from '@/shared/components/BottomNav.vue';
+import MobileMenu from '@/shared/components/MobileMenu.vue';
 import SuggestionsCard from '@/shared/components/SuggestionsCard.vue';
 import { isAuthenticated } from '@/shared/services/token-storage';
 
 export default defineComponent({
   name: 'App',
-  components: { TheSideBar, TheHeader, BottomNav, SuggestionsCard },
+  components: { TheSideBar, TheHeader, MobileMenu, SuggestionsCard },
   data() {
     return {
       isCollapsed: false,
-      isDark: false
+      isDark: false,
+      mobileMenuOpen: false
     };
   },
   computed: {
@@ -36,6 +37,12 @@ export default defineComponent({
     toggleSidebar(): void {
       this.isCollapsed = !this.isCollapsed;
     },
+    toggleMobileMenu(): void {
+      this.mobileMenuOpen = !this.mobileMenuOpen;
+    },
+    closeMobileMenu(): void {
+      this.mobileMenuOpen = false;
+    },
     toggleDarkMode(): void {
       this.isDark = !this.isDark;
       document.querySelector('html')?.classList.toggle('my-app-dark', this.isDark);
@@ -46,6 +53,11 @@ export default defineComponent({
     if (localStorage.getItem('theme') === 'dark') {
       this.isDark = true;
       document.querySelector('html')?.classList.add('my-app-dark');
+    }
+  },
+  watch: {
+    '$route'() {
+      this.closeMobileMenu();
     }
   }
 });
@@ -66,7 +78,16 @@ export default defineComponent({
     />
 
     <div class="flex-grow-1 flex flex-column min-w-0 min-h-screen">
-      <TheHeader :is-dark="isDark" :show-actions="showSidebar" @toggle-dark="toggleDarkMode" />
+      <div class="mobile-top">
+        <TheHeader
+          :is-dark="isDark"
+          :show-actions="showSidebar"
+          :menu-open="mobileMenuOpen"
+          @toggle-dark="toggleDarkMode"
+          @menu-click="toggleMobileMenu"
+        />
+        <MobileMenu v-if="showSidebar && mobileMenuOpen" :menu-items="menuItems" @close="closeMobileMenu" />
+      </div>
 
       <div class="layout-body flex-grow-1 flex w-full">
         <main id="main-content" class="layout-center flex-grow-1 min-w-0 w-full">
@@ -77,13 +98,11 @@ export default defineComponent({
           </router-view>
         </main>
 
-        <aside v-if="showSidebar" class="layout-right flex flex-column gap-3" aria-label="Panel contextual">
+        <aside v-if="showSidebar" class="layout-right hidden xl:flex flex-column gap-3" aria-label="Panel contextual">
           <SuggestionsCard />
           <p class="cs-muted layout-footnote">Chat Social · Red social minimalista</p>
         </aside>
       </div>
-
-      <BottomNav v-if="showSidebar" />
     </div>
   </div>
 </template>
@@ -131,19 +150,17 @@ export default defineComponent({
   text-decoration: none;
 }
 
-/* Columna derecha solo en pantallas amplias. */
-@media (max-width: 1199px) {
-  .layout-right {
-    display: none;
+/* En móvil, el header + menú forman un bloque fijo del que cuelga el panel. */
+@media (max-width: 767px) {
+  .mobile-top {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
   }
 }
 
-/* Móvil: sin sidebar lateral, el feed ocupa todo el ancho. */
+/* Móvil: el feed ocupa todo el ancho. */
 @media (max-width: 767px) {
-  .layout-sidebar {
-    display: none;
-  }
-
   .layout-body {
     padding: 0.75rem;
     padding-bottom: 0.75rem;
