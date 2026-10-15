@@ -2,11 +2,14 @@ import { createRouter, createWebHistory } from 'vue-router';
 import FeedView from '@/content/pages/FeedView.vue';
 import LoginView from '@/iam/pages/LoginView.vue';
 import RegisterView from '@/iam/pages/RegisterView.vue';
+import AccountSettingsView from '@/iam/pages/AccountSettingsView.vue';
+import AdminView from '@/iam/pages/AdminView.vue';
 import ExploreView from '@/social/pages/ExploreView.vue';
 import MessagesView from '@/chat/pages/MessagesView.vue';
 import NotificationsView from '@/notifications/pages/NotificationsView.vue';
 import ProfileView from '@/profiles/pages/ProfileView.vue';
 import { isAuthenticated } from '@/shared/services/token-storage';
+import { useCurrentUser } from '@/shared/services/use-current-user';
 
 const routes = [
   {
@@ -55,6 +58,17 @@ const routes = [
     name: 'profile',
     component: ProfileView,
     props: true
+  },
+  {
+    path: '/settings',
+    name: 'settings',
+    component: AccountSettingsView
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: AdminView,
+    meta: { requiresAdmin: true }
   }
 ];
 
@@ -63,7 +77,7 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach((to) => {
+router.beforeEach(async (to) => {
   const publicRoute = to.meta.public === true;
   const authenticated = isAuthenticated();
 
@@ -72,6 +86,13 @@ router.beforeEach((to) => {
   }
   if ((to.name === 'login' || to.name === 'register') && authenticated) {
     return { name: 'home' };
+  }
+  if (to.meta.requiresAdmin === true) {
+    const { load } = useCurrentUser();
+    const me = await load();
+    if (me?.role !== 'ADMIN') {
+      return { name: 'home' };
+    }
   }
   return true;
 });

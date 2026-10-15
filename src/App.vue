@@ -5,6 +5,8 @@ import TheHeader from '@/shared/components/TheHeader.vue';
 import MobileMenu from '@/shared/components/MobileMenu.vue';
 import SuggestionsCard from '@/shared/components/SuggestionsCard.vue';
 import { isAuthenticated } from '@/shared/services/token-storage';
+import { useCurrentUser } from '@/shared/services/use-current-user';
+import type { User } from '@/iam/model/user.entity';
 
 export default defineComponent({
   name: 'App',
@@ -13,7 +15,8 @@ export default defineComponent({
     return {
       isCollapsed: false,
       isDark: false,
-      mobileMenuOpen: false
+      mobileMenuOpen: false,
+      me: null as User | null
     };
   },
   computed: {
@@ -23,14 +26,22 @@ export default defineComponent({
     showSidebar(): boolean {
       return !this.isPublicRoute && isAuthenticated();
     },
+    isAdmin(): boolean {
+      return this.me?.role === 'ADMIN';
+    },
     menuItems(): MenuItem[] {
-      return [
+      const items: MenuItem[] = [
         { label: 'Inicio', icon: 'pi pi-home', to: { name: 'home' } },
         { label: 'Explorar', icon: 'pi pi-search', to: { name: 'explore' } },
         { label: 'Mensajes', icon: 'pi pi-envelope', to: { name: 'messages' } },
         { label: 'Notificaciones', icon: 'pi pi-bell', to: { name: 'notifications' }, badge: 3 },
-        { label: 'Mi perfil', icon: 'pi pi-user', to: { name: 'my-profile' } }
+        { label: 'Mi perfil', icon: 'pi pi-user', to: { name: 'my-profile' } },
+        { label: 'Ajustes', icon: 'pi pi-cog', to: { name: 'settings' } }
       ];
+      if (this.isAdmin) {
+        items.push({ label: 'Admin', icon: 'pi pi-shield', to: { name: 'admin' } });
+      }
+      return items;
     }
   },
   methods: {
@@ -47,6 +58,14 @@ export default defineComponent({
       this.isDark = !this.isDark;
       document.querySelector('html')?.classList.toggle('my-app-dark', this.isDark);
       localStorage.setItem('theme', this.isDark ? 'dark' : 'light');
+    },
+    async refreshMe(): Promise<void> {
+      if (isAuthenticated()) {
+        const { load } = useCurrentUser();
+        this.me = await load();
+      } else {
+        this.me = null;
+      }
     }
   },
   mounted() {
@@ -54,10 +73,12 @@ export default defineComponent({
       this.isDark = true;
       document.querySelector('html')?.classList.add('my-app-dark');
     }
+    void this.refreshMe();
   },
   watch: {
     '$route'() {
       this.closeMobileMenu();
+      void this.refreshMe();
     }
   }
 });
